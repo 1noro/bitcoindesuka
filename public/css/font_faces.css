@@ -1,0 +1,6 @@
+
+@font-face {
+    font-family: 'My Courier New';
+    src: url('../font/woff/courier_new.woff') format('woff'), /* Pretty Modern Browsers */
+        url('../font/ttf/courier_new.ttf')  format('truetype'); /* Safari, Android, iOS */
+}

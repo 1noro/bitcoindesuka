@@ -1,2 +1,3 @@
-# bitcoinですか？
+# BTCOINですか？
+
 Bitcoin converter.
