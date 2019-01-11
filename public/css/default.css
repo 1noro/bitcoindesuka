@@ -1,1 +1,7 @@
 /*defaul.css*/
+
+body {
+    margin: 20px;
+    font-size: 17px;
+    font-family: "My Courier New", "Courier New";
+}
