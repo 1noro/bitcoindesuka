@@ -1,2 +1,2 @@
-# bitcoindesuka
+# bitcoinですか？
 Bitcoin converter.
