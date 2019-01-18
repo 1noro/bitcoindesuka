@@ -53,28 +53,66 @@ function fetchJSONFile(path, callback) {
     httpRequest.send();
 }
 
-function update_data(price_usd) {
+function update_data_cmc(price_usd) {
     var
-        btc_value_1 = document.getElementById("btc_value_1"),
-        usd_value_1 = document.getElementById("usd_value_1");
+        btc_value = document.getElementById("btc_value_1"),
+        usd_value = document.getElementById("usd_value_1");
 
     if (my_btc) {
         var btc = my_btc.split('.'),
             usd_result = parseFloat(my_btc) * parseFloat(price_usd),
             usd = usd_result.toString().split('.');
-        btc_value_1.innerHTML=pad_with_zeroes3(btc[0],ulength,true)+'.'+pad_with_zeroes3(btc[1],dlength,false);
-        usd_value_1.innerHTML=pad_with_zeroes3(usd[0],ulength,true)+'.'+pad_with_zeroes3(usd[1],dlength,false);
+        btc_value.innerHTML=pad_with_zeroes3(btc[0],ulength,true)+'.'+pad_with_zeroes3(btc[1],dlength,false);
+        usd_value.innerHTML=pad_with_zeroes3(usd[0],ulength,true)+'.'+pad_with_zeroes3(usd[1],dlength,false);
     } else {
         var usd = price_usd.split('.');
-        btc_value_1.innerHTML=pad_with_zeroes3('1',ulength,true)+'.'+pad_with_zeroes3('0',dlength,false);
-        usd_value_1.innerHTML=pad_with_zeroes3(usd[0],ulength,true)+'.'+pad_with_zeroes3(usd[1],dlength,false);
+        btc_value.innerHTML=pad_with_zeroes3('1',ulength,true)+'.'+pad_with_zeroes3('0',dlength,false);
+        usd_value.innerHTML=pad_with_zeroes3(usd[0],ulength,true)+'.'+pad_with_zeroes3(usd[1],dlength,false);
+    }
+}
+
+function update_data_cb_usd(price_usd) {
+    var
+        btc_value = document.getElementById("btc_value_2"),
+        usd_value = document.getElementById("usd_value_2");
+
+    if (my_btc) {
+        var btc = my_btc.split('.'),
+            usd_result = parseFloat(my_btc) * parseFloat(price_usd),
+            usd = usd_result.toString().split('.');
+        btc_value.innerHTML=pad_with_zeroes3(btc[0],ulength,true)+'.'+pad_with_zeroes3(btc[1],dlength,false);
+        usd_value.innerHTML=pad_with_zeroes3(usd[0],ulength,true)+'.'+pad_with_zeroes3(usd[1],dlength,false);
+    } else {
+        var usd = price_usd.split('.');
+        btc_value.innerHTML=pad_with_zeroes3('1',ulength,true)+'.'+pad_with_zeroes3('0',dlength,false);
+        usd_value.innerHTML=pad_with_zeroes3(usd[0],ulength,true)+'.'+pad_with_zeroes3(usd[1],dlength,false);
+    }
+}
+
+function update_data_cb_eur(price_usd) {
+    var
+        usd_value = document.getElementById("eur_value_2");
+
+    if (my_btc) {
+        var btc = my_btc.split('.'),
+            usd_result = parseFloat(my_btc) * parseFloat(price_usd),
+            usd = usd_result.toString().split('.');
+        usd_value.innerHTML=pad_with_zeroes3(usd[0],ulength,true)+'.'+pad_with_zeroes3(usd[1],dlength,false);
+    } else {
+        var usd = price_usd.split('.');
+        usd_value.innerHTML=pad_with_zeroes3(usd[0],ulength,true)+'.'+pad_with_zeroes3(usd[1],dlength,false);
     }
 }
 
 function main() {
     my_btc = findGetParameter("btc");
     fetchJSONFile('https://api.coinmarketcap.com/v1/ticker/', function(data){
-
-        update_data(data[0].price_usd);
+        update_data_cmc(data[0].price_usd);
+    });
+    fetchJSONFile('https://api.coinbase.com/v2/prices/spot?currency=USD', function(data){
+        update_data_cb_usd(data.data.amount)
+    });
+    fetchJSONFile('https://api.coinbase.com/v2/prices/spot?currency=EUR', function(data){
+        update_data_cb_eur(data.data.amount)
     });
 }
