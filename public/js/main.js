@@ -19,41 +19,6 @@ function findGetParameter(parameterName) {
     return result;
 }
 
-function pad_with_zeroes(number, length, left) {
-    var my_string = '' + number;
-    if (left) {
-        while (my_string.length < length) {
-            my_string = '0' + my_string;
-        }
-    } else {
-        while (my_string.length < length) {
-            my_string = my_string + '0';
-        }
-    }
-    return my_string;
-}
-
-function pad_with_zeroes2(number, length, left) {
-    var
-        pre_mstr = '' + number,
-        mstr = pre_mstr.split(''),
-        out = '';
-    if (left) {
-        var i = mstr.length-1;
-        while (out.length < length) {
-            out = (mstr[i]?mstr[i]:'0') + out;
-            i--;
-        }
-    } else {
-        var i = 0;
-        while (out.length < length) {
-            out = out + (mstr[i]?mstr[i]:'0');
-            i++;
-        }
-    }
-    return out;
-}
-
 function pad_with_zeroes3(number, length, left) {
     var
         pre_mstr = '' + number,
