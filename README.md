@@ -1,6 +1,6 @@
 # BTCOINですか？
 
-Bitcoin converter.
+A JavaScript application that converts the amount of bitcoins introduced by the GET method and returns the value in USD and EUR from different exchange websites, such as CoinMarketCap or CoinBase.
 
 ## Credits
 
