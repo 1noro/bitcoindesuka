@@ -1,6 +1,6 @@
 # ![](./public/img/logo1-32.png) BTCOINですか？
 
-A JavaScript application hosted in (http://bdk.rat.la/index.html) that converts the amount of bitcoins introduced by the GET method and returns the value in USD and EUR from different exchange websites, such as CoinMarketCap or CoinBase.
+A JavaScript application hosted in [bdk.rat.la](http://bdk.rat.la/index.html), that converts the amount of bitcoins introduced by the [GET](http://bdk.rat.la/index.html?btc=5.0) method and returns the value in USD and EUR from different exchange websites, such as CoinMarketCap or CoinBase.
 
 > In the future I would like to add support for more exchange websites.
 
