@@ -6,7 +6,7 @@ A JavaScript application hosted in [bdk.rat.la](http://bdk.rat.la/index.html), t
 
 ## Credits
 
-Created, programmed and maintained by [boot1110001](https://github.com/boot1110001).
+Created, programmed and maintained by [inoro](https://github.com/boot1110001).
 
 ## Licenses
 
