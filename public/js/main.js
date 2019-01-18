@@ -4,7 +4,8 @@
 var
     my_btc = '',
     ulength = 8,
-    dlength = 8;
+    dlength = 8,
+    interval1 = 0;
 
 function findGetParameter(parameterName) {
     var result = null,
@@ -51,6 +52,16 @@ function fetchJSONFile(path, callback) {
     };
     httpRequest.open('GET', path);
     httpRequest.send();
+}
+
+function update_time() {
+    var
+        span = document.getElementById("update_time"),
+        d = new Date(),
+        hh = pad_with_zeroes3(d.getHours(),2,true),
+        mm = pad_with_zeroes3(d.getMinutes(),2,true),
+        ss = pad_with_zeroes3(d.getSeconds(),2,true);
+    span.innerHTML = hh+':'+mm+':'+ss;
 }
 
 function update_data_cmc(price_usd) {
@@ -106,13 +117,16 @@ function update_data_cb_eur(price_usd) {
 
 function main() {
     my_btc = findGetParameter("btc");
-    fetchJSONFile('https://api.coinmarketcap.com/v1/ticker/', function(data){
-        update_data_cmc(data[0].price_usd);
-    });
-    fetchJSONFile('https://api.coinbase.com/v2/prices/spot?currency=USD', function(data){
-        update_data_cb_usd(data.data.amount)
-    });
-    fetchJSONFile('https://api.coinbase.com/v2/prices/spot?currency=EUR', function(data){
-        update_data_cb_eur(data.data.amount)
-    });
+
+    fetchJSONFile('https://api.coinmarketcap.com/v1/ticker/', function(data){update_data_cmc(data[0].price_usd);});
+    fetchJSONFile('https://api.coinbase.com/v2/prices/spot?currency=USD', function(data){update_data_cb_usd(data.data.amount)});
+    fetchJSONFile('https://api.coinbase.com/v2/prices/spot?currency=EUR', function(data){update_data_cb_eur(data.data.amount)});
+    update_time();
+
+    interval1 = setInterval(function(){
+        fetchJSONFile('https://api.coinmarketcap.com/v1/ticker/', function(data){update_data_cmc(data[0].price_usd);});
+        fetchJSONFile('https://api.coinbase.com/v2/prices/spot?currency=USD', function(data){update_data_cb_usd(data.data.amount)});
+        fetchJSONFile('https://api.coinbase.com/v2/prices/spot?currency=EUR', function(data){update_data_cb_eur(data.data.amount)});
+        update_time();
+    }, 10000);
 }
