@@ -3,7 +3,7 @@
 // var price_usd = 0;
 var
     my_btc = '',
-    ulength = 5,
+    ulength = 8,
     dlength = 8;
 
 function findGetParameter(parameterName) {
@@ -33,6 +33,47 @@ function pad_with_zeroes(number, length, left) {
     return my_string;
 }
 
+function pad_with_zeroes2(number, length, left) {
+    var
+        pre_mstr = '' + number,
+        mstr = pre_mstr.split(''),
+        out = '';
+    if (left) {
+        var i = mstr.length-1;
+        while (out.length < length) {
+            out = (mstr[i]?mstr[i]:'0') + out;
+            i--;
+        }
+    } else {
+        var i = 0;
+        while (out.length < length) {
+            out = out + (mstr[i]?mstr[i]:'0');
+            i++;
+        }
+    }
+    return out;
+}
+
+function pad_with_zeroes3(number, length, left) {
+    var
+        pre_mstr = '' + number,
+        mstr = pre_mstr.split(''),
+        out = '';
+    if (left) {
+        out=pre_mstr;
+        while (out.length < length) {
+            out = '0' + out;
+        }
+    } else {
+        var i = 0;
+        while (out.length < length) {
+            out = out + (mstr[i]?mstr[i]:'0');
+            i++;
+        }
+    }
+    return out;
+}
+
 function fetchJSONFile(path, callback) {
     var httpRequest = new XMLHttpRequest();
     httpRequest.onreadystatechange = function() {
@@ -56,26 +97,19 @@ function update_data(price_usd) {
         var btc = my_btc.split('.'),
             usd_result = parseFloat(my_btc) * parseFloat(price_usd),
             usd = usd_result.toString().split('.');
-        btc_value_1.innerHTML=pad_with_zeroes(btc[0],ulength,true)+'.'+pad_with_zeroes(btc[1],dlength,false);
-        usd_value_1.innerHTML=pad_with_zeroes(usd[0],ulength,true)+'.'+pad_with_zeroes(usd[1],dlength,false);
+        btc_value_1.innerHTML=pad_with_zeroes3(btc[0],ulength,true)+'.'+pad_with_zeroes3(btc[1],dlength,false);
+        usd_value_1.innerHTML=pad_with_zeroes3(usd[0],ulength,true)+'.'+pad_with_zeroes3(usd[1],dlength,false);
     } else {
         var usd = price_usd.split('.');
-        btc_value_1.innerHTML=pad_with_zeroes('1',ulength,true)+'.'+pad_with_zeroes('0',dlength,false);
-        usd_value_1.innerHTML=pad_with_zeroes(usd[0],ulength,true)+'.'+pad_with_zeroes(usd[1],dlength,false);
+        btc_value_1.innerHTML=pad_with_zeroes3('1',ulength,true)+'.'+pad_with_zeroes3('0',dlength,false);
+        usd_value_1.innerHTML=pad_with_zeroes3(usd[0],ulength,true)+'.'+pad_with_zeroes3(usd[1],dlength,false);
     }
 }
 
 function main() {
-    // this requests the file and executes a callback with the parsed result once
-    //   it is available
-    // alert('1: '+window.price_usd);
     my_btc = findGetParameter("btc");
     fetchJSONFile('https://api.coinmarketcap.com/v1/ticker/', function(data){
-        // do something with your data
-        // console.log(data);
-        // alert('2: '+data[0].price_usd);
-        // window.price_usd = data[0].price_usd;
+
         update_data(data[0].price_usd);
     });
-    // alert('3: '+window.price_usd);
 }
